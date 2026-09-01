@@ -1,0 +1,118 @@
+<div class="testimonials">
+  <div class="testimonials-inner">
+    <h2 class="testimonials-heading">{{ section.settings.heading }}</h2>
+
+    <div class="testimonials-grid">
+      {% for block in section.blocks %}
+        <div class="testimonial-card" {{ block.shopify_attributes }}>
+          <p class="testimonial-text">"{{ block.settings.review }}"</p>
+          <p class="testimonial-author">— {{ block.settings.author }}</p>
+          <p class="testimonial-rating">
+            {% for i in (1..block.settings.rating) %}⭐{% endfor %}
+          </p>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% stylesheet %}
+  .testimonials {
+    padding: 60px 24px;
+    background-color: #f9f9f9;
+  }
+
+  .testimonials-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .testimonials-heading {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .testimonial-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .testimonial-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: #444;
+  }
+
+  .testimonial-author {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .testimonial-rating {
+    font-size: 1rem;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "What Our Customers Say"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "review",
+          "label": "Review",
+          "default": "This product changed my life!"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Customer Name",
+          "default": "Happy Customer"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}

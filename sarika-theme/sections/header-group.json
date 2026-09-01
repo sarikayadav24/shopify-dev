@@ -1,0 +1,18 @@
+{
+  "type": "header",
+  "name": "t:general.header",
+  "sections": {
+    "announcement_bar": {
+      "type": "announcement_bar",
+      "settings": {}
+    },
+    "header": {
+      "type": "header",
+      "settings": {}
+    }
+  },
+  "order": [
+    "announcement_bar",
+    "header"
+  ]
+}

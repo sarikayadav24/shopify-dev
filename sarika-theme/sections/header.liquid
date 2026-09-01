@@ -1,0 +1,263 @@
+<header class="site-header {% if section.settings.sticky_header %}site-header--sticky{% endif %}"
+  style="background-color: {{ section.settings.background_color }}; color: {{ section.settings.text_color }};">
+
+  <div class="header-inner">
+
+    {% comment %} Logo / Store Name {% endcomment %}
+    <div class="header-logo">
+      {% if section.settings.logo %}
+        <a href="{{ routes.root_url }}">
+          {{ section.settings.logo | image_url: width: 200 | image_tag: class: 'header-logo-img', alt: shop.name }}
+        </a>
+      {% else %}
+        <a href="{{ routes.root_url }}" class="header-store-name" style="color: {{ section.settings.text_color }};">
+          {{ shop.name }}
+        </a>
+      {% endif %}
+    </div>
+
+    {% comment %} Desktop Navigation {% endcomment %}
+    <nav class="header-nav">
+      {% for link in section.settings.menu.links %}
+        <a href="{{ link.url }}"
+          class="header-nav-link {% if link.active %}header-nav-link--active{% endif %}"
+          style="color: {{ section.settings.text_color }};">
+          {{ link.title }}
+        </a>
+      {% endfor %}
+    </nav>
+
+    {% comment %} Icons {% endcomment %}
+    <div class="header-icons">
+      {% if shop.customer_accounts_enabled %}
+        <a href="{{ routes.account_url }}" class="header-icon" style="color: {{ section.settings.text_color }};">
+          {{ 'icon-account.svg' | inline_asset_content }}
+        </a>
+      {% endif %}
+
+      <a href="{{ routes.cart_url }}" class="header-icon header-cart" style="color: {{ section.settings.text_color }};">
+        {{ 'icon-cart.svg' | inline_asset_content }}
+        {% if cart.item_count > 0 %}
+          <span class="cart-count">{{ cart.item_count }}</span>
+        {% endif %}
+      </a>
+
+      {% comment %} Mobile menu toggle {% endcomment %}
+      <button class="mobile-menu-toggle" aria-label="Toggle menu" onclick="this.closest('.site-header').classList.toggle('mobile-menu-open')">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+  </div>
+
+  {% comment %} Mobile Navigation {% endcomment %}
+  <nav class="mobile-nav">
+    {% for link in section.settings.menu.links %}
+      <a href="{{ link.url }}"
+        class="mobile-nav-link"
+        style="color: {{ section.settings.text_color }};">
+        {{ link.title }}
+      </a>
+    {% endfor %}
+  </nav>
+
+</header>
+
+{% stylesheet %}
+  .site-header {
+    position: relative;
+    z-index: 100;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .site-header--sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+
+  body:has(.site-header--sticky) {
+    padding-top: 70px;
+  }
+
+  .header-inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 var(--page-margin);
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .header-logo-img {
+    height: 40px;
+    width: auto;
+    display: block;
+  }
+
+  .header-store-name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .header-nav {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .header-nav-link {
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: opacity 0.2s;
+  }
+
+  .header-nav-link:hover,
+  .header-nav-link--active {
+    opacity: 0.6;
+  }
+
+  .header-icons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .header-icon {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    position: relative;
+  }
+
+  .header-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .header-cart {
+    position: relative;
+  }
+
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #000;
+    color: #fff;
+    font-size: 0.65rem;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .mobile-menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: currentColor;
+  }
+
+  .mobile-nav {
+    display: none;
+    flex-direction: column;
+    padding: 16px 24px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .mobile-nav-link {
+    text-decoration: none;
+    padding: 10px 0;
+    font-size: 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+
+  @media (max-width: 768px) {
+    .header-nav {
+      display: none;
+    }
+
+    .mobile-menu-toggle {
+      display: flex;
+    }
+
+    .site-header.mobile-menu-open .mobile-nav {
+      display: flex;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "customer_account_menu",
+      "label": "Customer Account Menu",
+      "default": "customer-account-main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_header",
+      "label": "Sticky Header",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,49 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "New Collection",
+        "heading": "Style That Speaks",
+        "subtext": "Discover our latest arrivals — crafted for everyday elegance.",
+        "cta_primary_label": "Shop Now",
+        "cta_primary_url": "/collections/all",
+        "cta_secondary_label": "View Lookbook",
+        "cta_secondary_url": "/pages/lookbook",
+        "alignment": "center",
+        "overlay_opacity": 40,
+        "min_height": 650,
+        "text_color": "#ffffff"
+      }
+    },
+    "featured-products": {
+      "type": "featured-products",
+      "settings": {
+        "eyebrow": "Handpicked For You",
+        "heading": "Featured Products",
+        "subtext": "Our most loved pieces, chosen for quality and style.",
+        "products_count": 4,
+        "view_all_label": "View All Products",
+        "background_color": "#ffffff",
+        "section_padding": 64
+      }
+    },
+    "promo-banner": {
+      "type": "promo-banner",
+      "settings": {
+        "heading": "Big Sale This Weekend!",
+        "subtext": "<p>Use code <strong>SAVE20</strong> at checkout for 20% off everything.</p>",
+        "show_button": true,
+        "button_label": "Shop the Sale",
+        "button_link": "/collections/all",
+        "background_color": "#f7f5f2",
+        "text_alignment": "center"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "featured-products",
+    "promo-banner"
+  ]
+}

@@ -1,0 +1,251 @@
+<div class="collection-page">
+  <div class="collection-page__inner">
+
+    {% comment %} Breadcrumb {% endcomment %}
+    <nav class="collection-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span>/</span>
+      <span>{{ collection.title }}</span>
+    </nav>
+
+    {% comment %} Collection header {% endcomment %}
+    <header class="collection-header">
+      <h1 class="collection-header__title">{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <div class="collection-header__description">{{ collection.description }}</div>
+      {% endif %}
+    </header>
+
+    {% comment %} Toolbar — product count + sort {% endcomment %}
+    <div class="collection-toolbar">
+      <p class="collection-toolbar__count">
+        {{ collection.products_count }}
+        {% if collection.products_count == 1 %}product{% else %}products{% endif %}
+      </p>
+
+      <div class="collection-toolbar__sort">
+        <label for="sort-select" class="collection-toolbar__sort-label">Sort by</label>
+        <select id="sort-select" class="collection-toolbar__sort-select"
+          onchange="window.location.href = window.location.pathname + '?sort_by=' + this.value;">
+          <option value="manual" {% if collection.sort_by == 'manual' %}selected{% endif %}>Featured</option>
+          <option value="best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>Best Selling</option>
+          <option value="title-ascending" {% if collection.sort_by == 'title-ascending' %}selected{% endif %}>A–Z</option>
+          <option value="title-descending" {% if collection.sort_by == 'title-descending' %}selected{% endif %}>Z–A</option>
+          <option value="price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
+          <option value="price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Price: High to Low</option>
+          <option value="created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Newest</option>
+        </select>
+      </div>
+    </div>
+
+    {% comment %} Product grid {% endcomment %}
+    {% paginate collection.products by section.settings.products_per_page %}
+
+      {% if collection.products.size > 0 %}
+        <div class="collection-grid">
+          {% for product in collection.products %}
+            {% render 'product-card', product: product %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="collection-empty">
+          <p>No products found in this collection.</p>
+          <a href="{{ routes.collections_url }}" class="btn btn--ghost">Browse All Collections</a>
+        </div>
+      {% endif %}
+
+      {% comment %} Pagination {% endcomment %}
+      {% if paginate.pages > 1 %}
+        <nav class="collection-pagination" aria-label="Pagination">
+          {% if paginate.previous %}
+            <a href="{{ paginate.previous.url }}" class="collection-pagination__btn">← Previous</a>
+          {% endif %}
+
+          {% for part in paginate.parts %}
+            {% if part.is_link %}
+              <a href="{{ part.url }}" class="collection-pagination__btn">{{ part.title }}</a>
+            {% else %}
+              {% if part.title == paginate.current_page %}
+                <span class="collection-pagination__btn collection-pagination__btn--active">{{ part.title }}</span>
+              {% else %}
+                <span class="collection-pagination__btn collection-pagination__btn--gap">{{ part.title }}</span>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+
+          {% if paginate.next %}
+            <a href="{{ paginate.next.url }}" class="collection-pagination__btn">Next →</a>
+          {% endif %}
+        </nav>
+      {% endif %}
+
+    {% endpaginate %}
+
+  </div>
+</div>
+
+{% stylesheet %}
+  .collection-page {
+    padding: var(--section-spacing) var(--page-margin);
+  }
+
+  .collection-page__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+  }
+
+  /* Breadcrumb */
+  .collection-breadcrumb {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    font-size: var(--font-size-xs);
+    color: var(--color-muted);
+    margin-bottom: var(--space-6);
+  }
+
+  .collection-breadcrumb a {
+    color: var(--color-muted);
+    text-decoration: none;
+  }
+
+  .collection-breadcrumb a:hover {
+    color: var(--color-foreground);
+  }
+
+  /* Header */
+  .collection-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .collection-header__title {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--space-3);
+  }
+
+  .collection-header__description {
+    font-size: var(--font-size-md);
+    color: var(--color-muted);
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  /* Toolbar */
+  .collection-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-8);
+  }
+
+  .collection-toolbar__count {
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+  }
+
+  .collection-toolbar__sort {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .collection-toolbar__sort-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+  }
+
+  .collection-toolbar__sort-select {
+    padding: 8px var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-input);
+    font-size: var(--font-size-sm);
+    background-color: var(--color-background);
+    cursor: pointer;
+  }
+
+  /* Grid */
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--space-8) var(--space-6);
+  }
+
+  @media (max-width: 480px) {
+    .collection-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4) var(--space-3);
+    }
+  }
+
+  /* Empty state */
+  .collection-empty {
+    text-align: center;
+    padding: var(--space-20) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+    color: var(--color-muted);
+  }
+
+  /* Pagination */
+  .collection-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-16);
+    flex-wrap: wrap;
+  }
+
+  .collection-pagination__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 var(--space-3);
+    border: 1px solid var(--color-border);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    color: var(--color-foreground);
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .collection-pagination__btn:hover {
+    background-color: var(--color-subtle);
+    border-color: var(--color-foreground);
+  }
+
+  .collection-pagination__btn--active {
+    background-color: var(--color-primary);
+    color: var(--color-primary-text);
+    border-color: var(--color-primary);
+  }
+
+  .collection-pagination__btn--gap {
+    border-color: transparent;
+    pointer-events: none;
+    color: var(--color-muted);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products Per Page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    }
+  ]
+}
+{% endschema %}
