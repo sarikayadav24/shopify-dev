@@ -101,16 +101,22 @@ Designed around removing friction from the path to purchase:
 
 ## Screenshots
 
-_Add desktop and mobile screenshots for each page below._
-
 ### Homepage
-`[desktop screenshot]` `[mobile screenshot]`
+| Desktop | Mobile |
+|---------|--------|
+| <img src="../docs/screenshots/home-desktop.png" width="420"> | <img src="../docs/screenshots/home-mobile.png" width="200"> |
 
 ### Product Page
-`[desktop screenshot]` `[mobile screenshot]`
+| Desktop | Mobile |
+|---------|--------|
+| <img src="../docs/screenshots/product-desktop.png" width="420"> | <img src="../docs/screenshots/product-mobile.png" width="200"> |
 
 ### Collection Page
-`[desktop screenshot]` `[mobile screenshot]`
+| Desktop | Mobile |
+|---------|--------|
+| <img src="../docs/screenshots/collection-desktop.png" width="420"> | <img src="../docs/screenshots/collection-mobile.png" width="200"> |
 
 ### Contact Page
-`[desktop screenshot]` `[mobile screenshot]`
+| Desktop | Mobile |
+|---------|--------|
+| <img src="../docs/screenshots/contact-desktop.png" width="420"> | <img src="../docs/screenshots/contact-mobile.png" width="200"> |

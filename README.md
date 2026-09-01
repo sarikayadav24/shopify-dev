@@ -89,15 +89,25 @@ A full write-up of the problem, approach, and result is in
 
 ## Screenshots
 
-_Desktop and mobile screenshots for the homepage, product page, collection page,
-and contact form._
+### Homepage
+| Desktop | Mobile |
+|---------|--------|
+| <img src="./docs/screenshots/home-desktop.png" width="420"> | <img src="./docs/screenshots/home-mobile.png" width="200"> |
 
-| Page | Desktop | Mobile |
-|------|---------|--------|
-| Homepage | _add_ | _add_ |
-| Product | _add_ | _add_ |
-| Collection | _add_ | _add_ |
-| Contact | _add_ | _add_ |
+### Product Page
+| Desktop | Mobile |
+|---------|--------|
+| <img src="./docs/screenshots/product-desktop.png" width="420"> | <img src="./docs/screenshots/product-mobile.png" width="200"> |
+
+### Collection Page
+| Desktop | Mobile |
+|---------|--------|
+| <img src="./docs/screenshots/collection-desktop.png" width="420"> | <img src="./docs/screenshots/collection-mobile.png" width="200"> |
+
+### Contact Page
+| Desktop | Mobile |
+|---------|--------|
+| <img src="./docs/screenshots/contact-desktop.png" width="420"> | <img src="./docs/screenshots/contact-mobile.png" width="200"> |
 
 ---
 
